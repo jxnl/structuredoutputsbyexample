@@ -497,86 +497,62 @@ For more information, see the original documentation:
 
 ```python
 import instructor
-import google.generativeai as genai
+from google import genai
 from pydantic import BaseModel
-genai.configure(api_key="YOUR_API_KEY")
-
+API_KEY = "YOUR_API_KEY"
+client = genai.Client(api_key=API_KEY)
+client = instructor.from_genai(client, mode=instructor.Mode.GENAI_TOOLS)
+client = genai.Client(vertexai=True, project="your-project-id", location="us-central1")
+client = instructor.from_genai(client, mode=instructor.Mode.GENAI_TOOLS)
 class User(BaseModel):
     name: str
     age: int
-model = genai.GenerativeModel("gemini-1.5-flash")
-client = instructor.from_gemini(
-    model,
-    mode=instructor.Mode.GEMINI_TOOLS  # or GEMINI_JSON
-)
-user = client.generate_content(
+
+
+response = client.chat.completions.create(
+    model="gemini-2.0-flash-001",
+    messages=[{"role": "user", "content": "Extract: Jason is 25 years old"}],
     response_model=User,
-    contents="Extract: John is 25 years old."
 )
+print(response)  # User(name='Jason', age=25)
+print(f"Name: {response.name}, Age: {response.age}")  # Name: Jason , Age: 25
+class User(BaseModel):
+    name: str
+    age: int
 
-print(f"Name: {user.name}, Age: {user.age}")
-flash_model = genai.GenerativeModel("gemini-1.5-flash")
-flash_client = instructor.from_gemini(
-    flash_model,
-    mode=instructor.Mode.GEMINI_TOOLS
-)
-pro_model = genai.GenerativeModel("gemini-1.5-pro")
-pro_client = instructor.from_gemini(
-    pro_model,
-    mode=instructor.Mode.GEMINI_TOOLS
-)
+    class Config:
+        propertyOrdering = ["name", "age"]
 
-user = client.generate_content(
+
+response = client.chat.completions.create(
+    model="gemini-2.0-flash-001",
+    messages=[{"role": "user", "content": "Extract: Jason is 25 years old"}],
     response_model=User,
-    contents="Extract: John is 25 years old.",
-    generation_config={
-        "system_instruction": "You are an expert at extracting structured data."
-    }
 )
-
-user = client.generate_content(
-    response_model=User,
-    contents=[
-        {"role": "user", "parts": ["Extract: John is 25 years old."]}
-    ]
-)
-
-json_client = instructor.from_gemini(
-    genai.GenerativeModel("gemini-1.5-flash"),
-    mode=instructor.Mode.GEMINI_JSON
-)
-
-user = json_client.generate_content(
-    response_model=User,
-    contents="Extract: John is 25 years old."
-)
-
-import google.auth
-import google.auth.transport.requests
-import instructor
-from openai import OpenAI
-creds, project = google.auth.default()
-auth_req = google.auth.transport.requests.Request()
-creds.refresh(auth_req)
-PROJECT = 'your-project-id'
-LOCATION = 'us-central1'  # or your preferred region
-endpoint = f'https://{LOCATION}-aiplatform.googleapis.com/v1beta1/projects/{PROJECT}/locations/{LOCATION}/endpoints/openapi'
-client = instructor.from_openai(
-    OpenAI(base_url=endpoint, api_key=creds.token),
-    mode=instructor.Mode.JSON  # JSON mode required
-)
-user = client.chat.completions.create(
-    model="google/gemini-1.5-flash",
-    response_model=User,
+print(response)  # User(name='Jason', age=25)
+print(f"Name: {response.name}, Age: {response.age}")  # Name: Jason, Age: 25
+response = client.chat.completions.create(
+    model="gemini-2.0-flash-001",
+    # system="Make everyone 10 years younger you find!",
     messages=[
-        {"role": "user", "content": "Extract: John is 25 years old."}
-    ]
+        {
+            "role": "system",
+            "content": "Make everyone 10 years younger you find!",
+        },
+        {
+            "role": "user",
+            "content": "Extract: Jason is 25 years old",
+        },
+    ],
+    response_model=User,
 )
+print(response)  # User(name='Jason', age=15)
+print(f"Name: {response.name}, Age: {response.age}")  # Name: Jason, Age: 15
 ```
 
 ```shell
 $ # Install required packages
-$ pip install instructor google-generativeai jsonref
+$ pip install "instructor[google-genai]"
 ```
 
 For more information, see the original documentation:
