@@ -1,102 +1,90 @@
 # Gemini Integration
 
 # Use Instructor with Google's Gemini models for structured data extraction.
-## pip install instructor google-generativeai jsonref#
+#
+# <b>pip install "instructor[google-genai]"</b>
 import instructor
-import google.generativeai as genai
-from pydantic import BaseModel
+from google import genai
+from pydantic import BaseModel, ConfigDict
 
-# Configure API key
-genai.configure(api_key="YOUR_API_KEY")
 
+# <b>Initialize and patch the client</b>
+# <i>(with gemini api key)</i>
+API_KEY = "YOUR_API_KEY"
+client = genai.Client(api_key=API_KEY)
+client = instructor.from_genai(client, mode=instructor.Mode.GENAI_TOOLS)
+
+# <b>Initialize and patch the client</b>
+# <i>(with vertex)</i>
+client = genai.Client(vertexai=True, project="your-project-id", location="us-central1")
+client = instructor.from_genai(client, mode=instructor.Mode.GENAI_TOOLS)
+
+
+# <b>Basic usage</b>
+#
+# Model suggestions:
+# - gemini-2.0-flash-lite (fastest)
+# - gemini-2.0-flash (faster)
+# - gemini-2.5-pro-preview-03-25 (best)
 class User(BaseModel):
     name: str
     age: int
 
-# Create Gemini model
-model = genai.GenerativeModel("gemini-1.5-flash")
 
-# Patch with instructor (require specific mode)
-client = instructor.from_gemini(
-    model,
-    mode=instructor.Mode.GEMINI_TOOLS  # or GEMINI_JSON
-)
-
-# Using generate_content method
-user = client.generate_content(
+response = client.chat.completions.create(
+    model="gemini-2.0-flash-001",
+    messages=[{"role": "user", "content": "Extract: Jason is 25 years old"}],
     response_model=User,
-    contents="Extract: John is 25 years old."
 )
+print(response)  # User(name='Jason', age=25)
+print(f"Name: {response.name}, Age: {response.age}")  # Name: Jason , Age: 25
 
-print(f"Name: {user.name}, Age: {user.age}")
-# Output: Name: John, Age: 25
 
-# Gemini 1.5 Flash (faster)
-flash_model = genai.GenerativeModel("gemini-1.5-flash")
-flash_client = instructor.from_gemini(
-    flash_model,
-    mode=instructor.Mode.GEMINI_TOOLS
-)
+# <b>Ensure property ordering</b>
+# By default, the API orders properties alphabetically which may be a problem if, for "example", you want to include an `examples` attribute and ensure it appears first.
+# #
+# See <a href="https://ai.google.dev/gemini-api/docs/structured-output?lang=python#property-ordering" target="_blank">Property Ordering</a> for more information.
+class User(BaseModel):
+    name: str
+    age: int
 
-# Gemini 1.5 Pro (more capable)
-pro_model = genai.GenerativeModel("gemini-1.5-pro")
-pro_client = instructor.from_gemini(
-    pro_model,
-    mode=instructor.Mode.GEMINI_TOOLS
-)
+    model_config = ConfigDict(
+        json_schema_extra={
+            "propertyOrdering": ["name", "age"],
+        },
+    )
 
-user = client.generate_content(
+
+response = client.chat.completions.create(
+    model="gemini-2.0-flash-001",
+    messages=[{"role": "user", "content": "Extract: Jason is 25 years old"}],
     response_model=User,
-    contents="Extract: John is 25 years old.",
-    generation_config={
-        "system_instruction": "You are an expert at extracting structured data."
-    }
 )
 
-user = client.generate_content(
-    response_model=User,
-    contents=[
-        {"role": "user", "parts": ["Extract: John is 25 years old."]}
-    ]
-)
+print(
+    User.model_json_schema()
+)  # To verify the addition of the propertyOrdering attribute to the JSON schema
+print(response)  # User(name='Jason', age=25)
+print(f"Name: {response.name}, Age: {response.age}")  # Name: Jason, Age: 25
 
-json_client = instructor.from_gemini(
-    genai.GenerativeModel("gemini-1.5-flash"),
-    mode=instructor.Mode.GEMINI_JSON
-)
 
-user = json_client.generate_content(
-    response_model=User,
-    contents="Extract: John is 25 years old."
-)
-
-import google.auth
-import google.auth.transport.requests
-import instructor
-from openai import OpenAI
-
-# Get Google auth credentials
-creds, project = google.auth.default()
-auth_req = google.auth.transport.requests.Request()
-creds.refresh(auth_req)
-
-# Configure Vertex AI endpoint
-PROJECT = 'your-project-id'
-LOCATION = 'us-central1'  # or your preferred region
-endpoint = f'https://{LOCATION}-aiplatform.googleapis.com/v1beta1/projects/{PROJECT}/locations/{LOCATION}/endpoints/openapi'
-
-# Create patched OpenAI client pointing to Vertex AI
-client = instructor.from_openai(
-    OpenAI(base_url=endpoint, api_key=creds.token),
-    mode=instructor.Mode.JSON  # JSON mode required
-)
-
-# Use OpenAI-style interface
-user = client.chat.completions.create(
-    model="google/gemini-1.5-flash",
-    response_model=User,
+# <b>Including a system instruction</b>
+#
+# Use either the `system` parameter or add a system message
+response = client.chat.completions.create(
+    model="gemini-2.0-flash-001",
+    # system="Make everyone 10 years younger you find!",
     messages=[
-        {"role": "user", "content": "Extract: John is 25 years old."}
-    ]
+        {
+            "role": "system",
+            "content": "Make everyone 10 years younger you find!",
+        },
+        {
+            "role": "user",
+            "content": "Extract: Jason is 25 years old",
+        },
+    ],
+    response_model=User,
 )
-
+print(response)  # User(name='Jason', age=15)
+print(f"Name: {response.name}, Age: {response.age}")  # Name: Jason, Age: 15

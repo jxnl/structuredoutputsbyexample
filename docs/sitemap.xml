@@ -2,271 +2,271 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://structuredoutputsbyexample.com</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/001-getting-started/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/002-installation/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/003-first-extraction/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/004-response-models/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/005-client-setup/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/006-openai/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/007-anthropic/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/008-gemini/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/009-cohere/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/010-mistral/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/011-other-providers/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/012-simple-object/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/013-list-extraction/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/014-nested-structures/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/015-field-validation/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/016-optional-fields/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/048-templates/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/038-vision-inputs/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/039-image-to-structured-data/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/040-table-extraction/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/041-audio-extraction/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/042-pdf-extraction/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/018-simple-classification/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/019-multi-label-classification/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/023-streaming-basics/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/025-streaming-lists/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/028-recursive-structures/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/029-knowledge-graphs/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/030-dependency-trees/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/031-task-planning/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/032-document-structure/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/033-validation-basics/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/034-custom-validators/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/035-retry-mechanisms/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/036-fallback-strategies/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/037-field-level-validation/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/043-caching-responses/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/044-parallel-extraction/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/045-batch-processing/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/046-hooks-and-callbacks/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/047-type-adapters/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/017-working-with-enums/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/050-resources/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://structuredoutputsbyexample.com/051-llamacpp/</loc>
-    <lastmod>2025-04-10</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

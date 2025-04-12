@@ -42,8 +42,8 @@
     "url": "https://structuredoutputsbyexample.com"
   },
   "mainEntityOfPage": "https://structuredoutputsbyexample.com/008-gemini/",
-  "datePublished": "2025-04-10T18:39:16+00:00",
-  "dateModified": "2025-04-10T18:39:16+00:00",
+  "datePublished": "2025-04-11T20:42:56+00:00",
+  "dateModified": "2025-04-11T20:42:56+00:00",
   "articleSection": "LLM Providers",
   "keywords": [
     "structured data",
@@ -296,263 +296,183 @@
                         Edit
                     </a>
                     <div id="all-python-code" style="display: none;">import instructor
-import google.generativeai as genai
-from pydantic import BaseModel
-genai.configure(api_key=&quot;YOUR_API_KEY&quot;)
-
+from google import genai
+from pydantic import BaseModel, ConfigDict
+API_KEY = &quot;YOUR_API_KEY&quot;
+client = genai.Client(api_key=API_KEY)
+client = instructor.from_genai(client, mode=instructor.Mode.GENAI_TOOLS)
+client = genai.Client(vertexai=True, project=&quot;your-project-id&quot;, location=&quot;us-central1&quot;)
+client = instructor.from_genai(client, mode=instructor.Mode.GENAI_TOOLS)
 class User(BaseModel):
     name: str
     age: int
-model = genai.GenerativeModel(&quot;gemini-1.5-flash&quot;)
-client = instructor.from_gemini(
-    model,
-    mode=instructor.Mode.GEMINI_TOOLS  # or GEMINI_JSON
-)
-user = client.generate_content(
+
+
+response = client.chat.completions.create(
+    model=&quot;gemini-2.0-flash-001&quot;,
+    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Extract: Jason is 25 years old&quot;}],
     response_model=User,
-    contents=&quot;Extract: John is 25 years old.&quot;
 )
+print(response)  # User(name=&#x27;Jason&#x27;, age=25)
+print(f&quot;Name: {response.name}, Age: {response.age}&quot;)  # Name: Jason , Age: 25
+class User(BaseModel):
+    name: str
+    age: int
 
-print(f&quot;Name: {user.name}, Age: {user.age}&quot;)
-flash_model = genai.GenerativeModel(&quot;gemini-1.5-flash&quot;)
-flash_client = instructor.from_gemini(
-    flash_model,
-    mode=instructor.Mode.GEMINI_TOOLS
-)
-pro_model = genai.GenerativeModel(&quot;gemini-1.5-pro&quot;)
-pro_client = instructor.from_gemini(
-    pro_model,
-    mode=instructor.Mode.GEMINI_TOOLS
-)
+    model_config = ConfigDict(
+        json_schema_extra={
+            &quot;propertyOrdering&quot;: [&quot;name&quot;, &quot;age&quot;],
+        },
+    )
 
-user = client.generate_content(
+
+response = client.chat.completions.create(
+    model=&quot;gemini-2.0-flash-001&quot;,
+    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Extract: Jason is 25 years old&quot;}],
     response_model=User,
-    contents=&quot;Extract: John is 25 years old.&quot;,
-    generation_config={
-        &quot;system_instruction&quot;: &quot;You are an expert at extracting structured data.&quot;
-    }
 )
 
-user = client.generate_content(
-    response_model=User,
-    contents=[
-        {&quot;role&quot;: &quot;user&quot;, &quot;parts&quot;: [&quot;Extract: John is 25 years old.&quot;]}
-    ]
-)
-
-json_client = instructor.from_gemini(
-    genai.GenerativeModel(&quot;gemini-1.5-flash&quot;),
-    mode=instructor.Mode.GEMINI_JSON
-)
-
-user = json_client.generate_content(
-    response_model=User,
-    contents=&quot;Extract: John is 25 years old.&quot;
-)
-
-import google.auth
-import google.auth.transport.requests
-import instructor
-from openai import OpenAI
-creds, project = google.auth.default()
-auth_req = google.auth.transport.requests.Request()
-creds.refresh(auth_req)
-PROJECT = &#x27;your-project-id&#x27;
-LOCATION = &#x27;us-central1&#x27;  # or your preferred region
-endpoint = f&#x27;https://{LOCATION}-aiplatform.googleapis.com/v1beta1/projects/{PROJECT}/locations/{LOCATION}/endpoints/openapi&#x27;
-client = instructor.from_openai(
-    OpenAI(base_url=endpoint, api_key=creds.token),
-    mode=instructor.Mode.JSON  # JSON mode required
-)
-user = client.chat.completions.create(
-    model=&quot;google/gemini-1.5-flash&quot;,
-    response_model=User,
+print(
+    User.model_json_schema()
+)  # To verify the addition of the propertyOrdering attribute to the JSON schema
+print(response)  # User(name=&#x27;Jason&#x27;, age=25)
+print(f&quot;Name: {response.name}, Age: {response.age}&quot;)  # Name: Jason, Age: 25
+response = client.chat.completions.create(
+    model=&quot;gemini-2.0-flash-001&quot;,
+    # system=&quot;Make everyone 10 years younger you find!&quot;,
     messages=[
-        {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Extract: John is 25 years old.&quot;}
-    ]
+        {
+            &quot;role&quot;: &quot;system&quot;,
+            &quot;content&quot;: &quot;Make everyone 10 years younger you find!&quot;,
+        },
+        {
+            &quot;role&quot;: &quot;user&quot;,
+            &quot;content&quot;: &quot;Extract: Jason is 25 years old&quot;,
+        },
+    ],
+    response_model=User,
 )
+print(response)  # User(name=&#x27;Jason&#x27;, age=15)
+print(f&quot;Name: {response.name}, Age: {response.age}&quot;)  # Name: Jason, Age: 15
 </div>
                 </div>            </div>
             <div class="row">
                 <div class="docs">
-                    <div style='font-size: 0.9em; color: #666;'>Use Instructor with Google's Gemini models for structured data extraction.<br>pip install instructor google-generativeai jsonref#</div>
+                    <div style='font-size: 0.9em; color: #666;'>Use Instructor with Google's Gemini models for structured data extraction.<br><br><b>pip install "instructor[google-genai]"</b></div>
 
                 </div>
                 <div class="code">
                     <pre><code class="language-python">import instructor
-import google.generativeai as genai
-from pydantic import BaseModel</code></pre>
+from google import genai
+from pydantic import BaseModel, ConfigDict</code></pre>
                 </div>
             </div>
             <hr>
             <div class="row">
                 <div class="docs">
-                    <div style='font-size: 0.9em; color: #666;'>Configure API key</div>
+                    <div style='font-size: 0.9em; color: #666;'><b>Initialize and patch the client</b><br><i>(with gemini api key)</i></div>
 
                 </div>
                 <div class="code">
-                    <pre><code class="language-python">genai.configure(api_key=&quot;YOUR_API_KEY&quot;)
+                    <pre><code class="language-python">API_KEY = &quot;YOUR_API_KEY&quot;
+client = genai.Client(api_key=API_KEY)
+client = instructor.from_genai(client, mode=instructor.Mode.GENAI_TOOLS)</code></pre>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="docs">
+                    <div style='font-size: 0.9em; color: #666;'><b>Initialize and patch the client</b><br><i>(with vertex)</i></div>
 
-class User(BaseModel):
+                </div>
+                <div class="code">
+                    <pre><code class="language-python">client = genai.Client(vertexai=True, project=&quot;your-project-id&quot;, location=&quot;us-central1&quot;)
+client = instructor.from_genai(client, mode=instructor.Mode.GENAI_TOOLS)</code></pre>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="docs">
+                    <div style='font-size: 0.9em; color: #666;'><b>Basic usage</b><br><br>Model suggestions:<br>- gemini-2.0-flash-lite (fastest)<br>- gemini-2.0-flash (faster)<br>- gemini-2.5-pro-preview-03-25 (best)</div>
+
+                </div>
+                <div class="code">
+                    <pre><code class="language-python">class User(BaseModel):
     name: str
-    age: int</code></pre>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="docs">
-                    <div style='font-size: 0.9em; color: #666;'>Create Gemini model</div>
+    age: int
 
-                </div>
-                <div class="code">
-                    <pre><code class="language-python">model = genai.GenerativeModel(&quot;gemini-1.5-flash&quot;)</code></pre>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="docs">
-                    <div style='font-size: 0.9em; color: #666;'>Patch with instructor (require specific mode)</div>
 
-                </div>
-                <div class="code">
-                    <pre><code class="language-python">client = instructor.from_gemini(
-    model,
-    mode=instructor.Mode.GEMINI_TOOLS  # or GEMINI_JSON
-)</code></pre>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="docs">
-                    <div style='font-size: 0.9em; color: #666;'>Using generate_content method</div>
-
-                </div>
-                <div class="code">
-                    <pre><code class="language-python">user = client.generate_content(
+response = client.chat.completions.create(
+    model=&quot;gemini-2.0-flash-001&quot;,
+    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Extract: Jason is 25 years old&quot;}],
     response_model=User,
-    contents=&quot;Extract: John is 25 years old.&quot;
 )
-
-print(f&quot;Name: {user.name}, Age: {user.age}&quot;)</code></pre>
-                </div>
-            </div>
-            <hr>
-            <hr>
-            <div class="row">
-                <div class="docs">
-                    <div style='font-size: 0.9em; color: #666;'>Gemini 1.5 Flash (faster)</div>
-
-                </div>
-                <div class="code">
-                    <pre><code class="language-python">flash_model = genai.GenerativeModel(&quot;gemini-1.5-flash&quot;)
-flash_client = instructor.from_gemini(
-    flash_model,
-    mode=instructor.Mode.GEMINI_TOOLS
-)</code></pre>
+print(response)  # User(name=&#x27;Jason&#x27;, age=25)
+print(f&quot;Name: {response.name}, Age: {response.age}&quot;)  # Name: Jason , Age: 25</code></pre>
                 </div>
             </div>
             <hr>
             <div class="row">
                 <div class="docs">
-                    <div style='font-size: 0.9em; color: #666;'>Gemini 1.5 Pro (more capable)</div>
+                    <div style='font-size: 0.9em; color: #666;'><b>Ensure property ordering</b><br>By default, the API orders properties alphabetically which may be a problem if, for "example", you want to include an `examples` attribute and ensure it appears first.<br><br>See <a href="https://ai.google.dev/gemini-api/docs/structured-output?lang=python#property-ordering" target="_blank">Property Ordering</a> for more information.</div>
 
                 </div>
                 <div class="code">
-                    <pre><code class="language-python">pro_model = genai.GenerativeModel(&quot;gemini-1.5-pro&quot;)
-pro_client = instructor.from_gemini(
-    pro_model,
-    mode=instructor.Mode.GEMINI_TOOLS
-)
+                    <pre><code class="language-python">class User(BaseModel):
+    name: str
+    age: int
 
-user = client.generate_content(
+    model_config = ConfigDict(
+        json_schema_extra={
+            &quot;propertyOrdering&quot;: [&quot;name&quot;, &quot;age&quot;],
+        },
+    )
+
+
+response = client.chat.completions.create(
+    model=&quot;gemini-2.0-flash-001&quot;,
+    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Extract: Jason is 25 years old&quot;}],
     response_model=User,
-    contents=&quot;Extract: John is 25 years old.&quot;,
-    generation_config={
-        &quot;system_instruction&quot;: &quot;You are an expert at extracting structured data.&quot;
-    }
 )
 
-user = client.generate_content(
-    response_model=User,
-    contents=[
-        {&quot;role&quot;: &quot;user&quot;, &quot;parts&quot;: [&quot;Extract: John is 25 years old.&quot;]}
-    ]
-)
-
-json_client = instructor.from_gemini(
-    genai.GenerativeModel(&quot;gemini-1.5-flash&quot;),
-    mode=instructor.Mode.GEMINI_JSON
-)
-
-user = json_client.generate_content(
-    response_model=User,
-    contents=&quot;Extract: John is 25 years old.&quot;
-)
-
-import google.auth
-import google.auth.transport.requests
-import instructor
-from openai import OpenAI</code></pre>
+print(
+    User.model_json_schema()
+)  # To verify the addition of the propertyOrdering attribute to the JSON schema
+print(response)  # User(name=&#x27;Jason&#x27;, age=25)
+print(f&quot;Name: {response.name}, Age: {response.age}&quot;)  # Name: Jason, Age: 25</code></pre>
                 </div>
             </div>
             <hr>
             <div class="row">
                 <div class="docs">
-                    <div style='font-size: 0.9em; color: #666;'>Get Google auth credentials</div>
+                    <div style='font-size: 0.9em; color: #666;'><b>Including a system instruction</b><br><br>Use either the `system` parameter or add a system message</div>
 
                 </div>
                 <div class="code">
-                    <pre><code class="language-python">creds, project = google.auth.default()
-auth_req = google.auth.transport.requests.Request()
-creds.refresh(auth_req)</code></pre>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="docs">
-                    <div style='font-size: 0.9em; color: #666;'>Configure Vertex AI endpoint</div>
-
-                </div>
-                <div class="code">
-                    <pre><code class="language-python">PROJECT = &#x27;your-project-id&#x27;
-LOCATION = &#x27;us-central1&#x27;  # or your preferred region
-endpoint = f&#x27;https://{LOCATION}-aiplatform.googleapis.com/v1beta1/projects/{PROJECT}/locations/{LOCATION}/endpoints/openapi&#x27;</code></pre>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="docs">
-                    <div style='font-size: 0.9em; color: #666;'>Create patched OpenAI client pointing to Vertex AI</div>
-
-                </div>
-                <div class="code">
-                    <pre><code class="language-python">client = instructor.from_openai(
-    OpenAI(base_url=endpoint, api_key=creds.token),
-    mode=instructor.Mode.JSON  # JSON mode required
-)</code></pre>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="docs">
-                    <div style='font-size: 0.9em; color: #666;'>Use OpenAI-style interface</div>
-
-                </div>
-                <div class="code">
-                    <pre><code class="language-python">user = client.chat.completions.create(
-    model=&quot;google/gemini-1.5-flash&quot;,
-    response_model=User,
+                    <pre><code class="language-python">response = client.chat.completions.create(
+    model=&quot;gemini-2.0-flash-001&quot;,
+    # system=&quot;Make everyone 10 years younger you find!&quot;,
     messages=[
-        {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Extract: John is 25 years old.&quot;}
-    ]
-)</code></pre>
+        {
+            &quot;role&quot;: &quot;system&quot;,
+            &quot;content&quot;: &quot;Make everyone 10 years younger you find!&quot;,
+        },
+        {
+            &quot;role&quot;: &quot;user&quot;,
+            &quot;content&quot;: &quot;Extract: Jason is 25 years old&quot;,
+        },
+    ],
+    response_model=User,
+)
+print(response)  # User(name=&#x27;Jason&#x27;, age=15)
+print(f&quot;Name: {response.name}, Age: {response.age}&quot;)  # Name: Jason, Age: 15</code></pre>
                 </div>
             </div>
             <hr>
             <h2>Running the Example</h2>
             <div class="row">
                 <div class="docs" style='font-size: 0.9em; color: #666;'>
-                    Use Instructor with Google&#x27;s Gemini models for structured data extraction.
+                    Use Instructor with Google&#x27;s Gemini models for structured data extraction using the latest SDK
                 </div>
                 <div class="code">
                     <div class="buttons">
@@ -561,7 +481,7 @@ endpoint = f&#x27;https://{LOCATION}-aiplatform.googleapis.com/v1beta1/projects/
                         </svg>
                     </div>
                     <pre><code class="language-shell"><span><span class="command-prompt">$ </span><span class="command-text"># Install required packages</span></span>
-$ pip install instructor google-generativeai jsonref</code></pre>
+$ pip install &quot;instructor[google-genai]&quot;</code></pre>
                 </div>
             </div>
             <hr>
@@ -569,6 +489,8 @@ $ pip install instructor google-generativeai jsonref</code></pre>
             <ul style="font-size: 0.9em;">
                 <li><a href="https://github.com/jxnl/instructor"
                          target="_blank">Documentation link 1</a></li>
+                <li><a href="https://ai.google.dev/gemini-api/docs/structured-output?lang=python#property-ordering"
+                         target="_blank">Documentation link 2</a></li>
             </ul>
             <div class="navigation">
                 <p class="prev">
@@ -580,7 +502,7 @@ $ pip install instructor google-generativeai jsonref</code></pre>
             </div>
         </main>
         <footer>
-            <p>by <a href="https://github.com/jxnl/instructor">Instructor</a> | <a href="https://github.com/jxnl/instructor">GitHub</a> | <span style="color: #888; font-size: 0.9em;">Last updated: April 10, 2025</span></p>
+            <p>by <a href="https://github.com/jxnl/instructor">Instructor</a> | <a href="https://github.com/jxnl/instructor">GitHub</a> | <span style="color: #888; font-size: 0.9em;">Last updated: April 11, 2025</span></p>
         </footer>
     </div>
     <script>

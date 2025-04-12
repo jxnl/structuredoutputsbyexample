@@ -101,4 +101,4 @@ Note: A more comprehensive version of this file / documentation is available at 
 - [Instructor Documentation](https://instructor-ai.github.io/instructor/)
 - [Pydantic Documentation](https://docs.pydantic.dev/)
 
-Last updated: April 10, 2025
+Last updated: April 11, 2025
